@@ -60,7 +60,7 @@ class MyClient(discord.Client):
             intro = tn.read_until(b"respectively.\r\n")
             print(intro)
             #TODO replace spaces in message.author!
-            tn.write(f"connect {message.author} 12345\n".encode("utf8"))
+            tn.write(f"connect {str(message.author).replace(' ', '-')} 12345\n".encode("utf8"))
             #result = tn.expect([NOPLAYER, CONNECTED])
             con = tn.read_until(CONNECTED, 3)
             print(con)
