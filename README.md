@@ -8,6 +8,8 @@ Created/tested with Python 3.8.2
 
 https://discordapp.com/developers/applications
 
+Copy example-config.ini to config.ini
+
 Add a Bot
 
 Reveal token

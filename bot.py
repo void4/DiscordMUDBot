@@ -3,6 +3,11 @@ import discord
 from discord.abc import PrivateChannel
 from discord.ext.tasks import loop
 from telnetlib import Telnet
+from configparser import ConfigParser
+
+config = ConfigParser()
+config.read("config.ini")[0]
+config = config["DEFAULT"]
 
 connections = {}
 
@@ -10,19 +15,20 @@ NOPLAYER = b"Either that player does not exist, or has a different password."
 CONNECTED = b"*** Connected ***\n"
 CREATED = b"*** Created ***\n"
 
-def makewiz():
-    pass
+def conv(s):
+    return s.encode("ascii")
 
-"""
+wiztn = Telnet("localhost", int(config["PORT"]))
+wiztn.write(conv("connect wizard\n"))
+print(wiztn.read_very_eager())
 
-wiztn = Telnet("localhost", 7777)
+def makewiz(id):
+    magicwords = f"""@chparent #{id} to $wiz
+@programmer #{id}
+;#{id}.wizard=1
+""".encode("ascii")
 
-wiztn.write()
-
-@chparent #p to $wiz
-@programmer #p
-;#p.wizard=1
-"""
+    wiztn.write(magicwords)
 
 def escape(b):
     return b.decode("utf8").replace("`", "\`")
@@ -54,7 +60,7 @@ class MyClient(discord.Client):
 
         if message.author.id not in connections:
             await message.channel.send("Reconnecting...")
-            tn = Telnet("localhost", 7777)
+            tn = Telnet("localhost", int(config["PORT"]))
             connections[message.author.id] = [tn, message.channel]
             #watch out for unicode!
             intro = tn.read_until(b"respectively.\r\n")
@@ -77,6 +83,12 @@ class MyClient(discord.Client):
         else:
             tn, _ = connections[message.author.id]
 
+        if message.content.startswith("/makewiz ") and str(message.author) in config["WIZARDS"].split(","):
+            id = message.content.split(" ")[1]
+            makewiz(id)
+            await message.channel.send(f"Made {id} a wizard :)")
+            return
+
         tn.write(message.content.encode("ascii")+b"\n")
 
         #data = tn.read_until(b"\n", 1)#until(b"\n", 3)
@@ -90,7 +102,5 @@ class MyClient(discord.Client):
 client = MyClient()
 output_task.start()
 #client.loop.create_task(output_task())
-from configparser import ConfigParser
-config = ConfigParser()
-config.read("config.ini")
-client.run(config["DEFAULT"]["DISCORDTOKEN"])
+
+client.run(config["DISCORDTOKEN"])
