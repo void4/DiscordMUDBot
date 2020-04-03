@@ -84,6 +84,8 @@ Your bot should now be online on your server
 
 #### Making yourself or others a wizard
 
+Only wizards can create, change or destroy objects.
+
 DM your bot:
 
 Every object in the MUD has an id, which looks like this: `#96`
