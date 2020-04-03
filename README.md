@@ -74,9 +74,9 @@ The server will load all objects from the database file specificed by the first 
 
 If you want to connect to the server the old school way, read this: [MANUAL.md](MANUAL.md)
 
-### Usage
+### Run the bot
 
-Now that the server is running, start the bot
+Now that the server is running, start the bot with
 
 `python bot.py`
 
@@ -86,11 +86,9 @@ Your bot should now be online on your server
 
 Only wizards can create, change or destroy objects.
 
-DM your bot:
+Every object in the MUD, including players has an id, which looks like this: `#96`
 
-Every object in the MUD has an id, which looks like this: `#96`
-
-Find out the players id with
+DM your bot and find out the players id with
 
 `@who`
 
