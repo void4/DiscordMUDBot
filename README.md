@@ -14,6 +14,14 @@ Reveal token
 
 Paste it into config.ini
 
+Go to OAuth2
+
+In the first set of fields, check *bot*
+
+In the second set of fields, check *Sending Messages*
+
+Copy the URL from the middle, open it in a new browser tab and add the bot to your server.
+
 Download a MOO server:
 
 - Linux: [LambdaMOO](http://www.moo-cows.com/downloads.html)
