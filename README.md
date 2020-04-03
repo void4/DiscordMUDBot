@@ -2,19 +2,30 @@
 
 ### Installation
 
-Created/tested with Python 3.8.2
+#### Install Git (to get updated versions of the bot later)
 
-`pip install -r requirements.txt`
+- Linux: `sudo apt install git`
+- Windows: https://gitforwindows.org/
+
+#### Install Python
+
+https://www.python.org/ -> Downloads -> Python 3.8.2
+
+When installing on Windows, check "Add to PATH"
+
+On Linux I'd recommend using [pyenv](https://github.com/pyenv/pyenv)
+
+#### Download this repository
+
+`git clone https://github.com/void4/DiscordMUDBot.git`
+
+#### Discord Bot creation
 
 https://discordapp.com/developers/applications
 
-Copy example-config.ini to config.ini
+Add an application
 
-Add a Bot
-
-Reveal token
-
-Paste it into config.ini
+Bot -> Add a Bot
 
 Go to OAuth2
 
@@ -24,6 +35,28 @@ In the second set of fields, check *Sending Messages*
 
 Copy the URL from the middle, open it in a new browser tab and add the bot to your server.
 
+#### Python Bot installation and configuration
+
+Go into the repository folder with cd ('change directory')
+
+`cd DiscordMUDBot`
+
+Install the required Python libraries
+
+`pip install -r requirements.txt`
+
+Copy example-config.ini to config.ini
+
+On the Discord Bot page:
+
+Reveal token
+
+Paste it into config.ini's DISCORDTOKEN field
+
+Set your own Discord username in the WIZARDS field
+
+#### Install and run a MUD server
+
 Download a MOO server:
 
 - Linux: [LambdaMOO](http://www.moo-cows.com/downloads.html)
@@ -31,36 +64,39 @@ Download a MOO server:
 
 Download a MOO Core [Database](http://www.moo-cows.com/downloads.html)
 
-Extract the files and start the server with a database:
+Recommended: LambdaCore
+
+Extract the files (you may need [7zip](https://www.7-zip.org/)) and start the server with a database:
 
 `./moo databasename.db snapshotname.db`
 
 The server will load all objects from the database file specificed by the first argument and then periodically, and when it shuts down, save snapshots of the world to the file specified by the second argument. When you start the server again, use snapshotname.db as the first argument.
 
-On Windows, activate the telnet client.
+If you want to connect to the server the old school way, read this: [MANUAL.md](MANUAL.md)
 
-On Linux, install it with `sudo apt install telnet`
+### Usage
 
-`telnet localhost 7777`
-
-`connect wizard`
-
-Making players wizards
-
-(to allow them to create new objects and rooms)
-
-replace p with the players object id, which you can find out with `@who`
-```
-@chparent #p to $wiz
-@programmer #p
-;#p.wizard=1
-```
-
-## Usage
-
-Add your Bots' Discord access token to config.ini. Then:
+Now that the server is running, start the bot
 
 `python bot.py`
+
+Your bot should now be online on your server
+
+#### Making yourself or others a wizard
+
+DM your bot:
+
+Every object in the MUD has an id, which looks like this: `#96`
+
+Find out the players id with
+
+`@who`
+
+Then type
+
+`/makewiz <number>` (for example `/makewiz 96`)
+
+### Notes
 
 For more information see here:
 
