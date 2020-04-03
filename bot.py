@@ -43,20 +43,18 @@ async def output_task():
 
     print(".", end="")
 
-class MyClient(discord.Client):
+class Bot(discord.Client):
     async def on_ready(self):
         print('Logged on as', self.user)
 
     async def on_message(self, message):
-        # only respond to private dms
+        # Only respond to private DMs
         if not isinstance(message.channel, PrivateChannel):
             return
-        # don't respond to ourselves
+
+        # Don't respond to ourselves
         if message.author == self.user:
             return
-
-        if message.content == 'ping':
-            await message.channel.send('pong')
 
         if message.author.id not in connections:
             await message.channel.send("Reconnecting...")
@@ -65,19 +63,17 @@ class MyClient(discord.Client):
             #watch out for unicode!
             intro = tn.read_until(b"respectively.\r\n")
             print(intro)
-            #TODO replace spaces in message.author!
             tn.write(f"connect {str(message.author).replace(' ', '-')} 12345\n".encode("utf8"))
             #result = tn.expect([NOPLAYER, CONNECTED])
             con = tn.read_until(CONNECTED, 3)
             print(con)
+
             if NOPLAYER in con:
                 await message.channel.send("First login, creating player...")
                 print(f"Creating player {message.author}")
                 tn.write(f"create {message.author} 12345\n".encode("utf8"))
                 crt = tn.read_until(CREATED, 3)
                 await message.channel.send("Player created!")
-            #tn.read_until()
-            #print(tn.read_until(b"\n"))
             #print(tn.read_until(b"\n"))
             await message.channel.send(con.decode("utf8"))
         else:
@@ -99,8 +95,6 @@ class MyClient(discord.Client):
 
         #telnet.close()
 
-client = MyClient()
+bot = Bot()
 output_task.start()
-#client.loop.create_task(output_task())
-
-client.run(config["DISCORDTOKEN"])
+bot.run(config["DISCORDTOKEN"])
