@@ -71,7 +71,7 @@ class Bot(discord.Client):
             if NOPLAYER in con:
                 await message.channel.send("First login, creating player...")
                 print(f"Creating player {message.author}")
-                tn.write(f"create {message.author} 12345\n".encode("utf8"))
+                tn.write(f"create {str(message.author).replace(' ', '-')} 12345\n".encode("utf8"))
                 crt = tn.read_until(CREATED, 3)
                 await message.channel.send("Player created!")
             #print(tn.read_until(b"\n"))
