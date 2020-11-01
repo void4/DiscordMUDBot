@@ -55,6 +55,8 @@ Paste it into config.ini's DISCORDTOKEN field
 
 Set your own Discord username in the WIZARDS field (this allows you to make players wizards using the bot, but doesn't make yourself one yet)
 
+If you modified your server intro message, set `INTRO=` to the last line of the message.
+
 #### Install and run a MUD server
 
 Download a MOO server:

@@ -61,7 +61,7 @@ class Bot(discord.Client):
             tn = Telnet("localhost", int(config["PORT"]))
             connections[message.author.id] = [tn, message.channel]
             #watch out for unicode!
-            intro = tn.read_until(b"respectively.\r\n")
+            intro = tn.read_until(config["INTRO"].encode("utf8") + b"\r\n")
             print(intro)
             tn.write(f"connect {str(message.author).replace(' ', '-')} 12345\n".encode("utf8"))
             #result = tn.expect([NOPLAYER, CONNECTED])
